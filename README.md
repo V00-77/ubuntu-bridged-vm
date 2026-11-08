@@ -23,9 +23,9 @@
 
 2. Create the bridge device (virtual switch device).  `sudo nmcli con add type bridge ifname br0 con-name br0 ipv4.method disabled ipv6.method disabled` **Note**:
 
-  * Actually the virtual switch can get an IP address for the host as NetworkManager treats it as normal interface for the host and just send DHCP request and get an IP that's why u see **ipv4.method disabled ipv6.method disabled** in the command,
+  * Actually the virtual switch can get an IP address for the host as NetworkManager treats it as normal interface for the host and just send DHCP request and get an IP that's why you see **ipv4.method disabled ipv6.method disabled** in the command,
 and actually that's the normal way of doing that and the host and the VM both connects to the network via one ethernet cable,
-but for our purpose of isolation we disable that and connects the host to the network through the wifi interface.
+but for our purpose is to make a separate route for the VM to connect to the network differnet from the host which is connected through wifi.
 
   
 
@@ -81,7 +81,9 @@ You can also use your ethernet NIC again normally for your host by changing betw
 *when u need the interface to act normally just drop the active profile that makes the interface act like a socket* `nmcli con down br0-port`
 And *activate whatever connection u want* `nmcli con up <profile-name>`
 **Note**:
-   * You might actually notice that when you change the active profile from the 'slave profile' to something else or you disconnect the host's ethernet interface with also the VM is off or its network source is NAT(because if its still on with network source is bridge the tap device will be still there so there is a one port on the br0 device so it will get its mac) > the br0 device loses its mac address that's because **a bridge with zero ports has no mac and also if it has one port it adopts that port's mac**
+   * A bridge with no ports shows an all-zero MAC. With ports it takes the lowest MAC among its ports.
+   You will notice this when you change the active profile from the 'slave profile' to something else or you disconnect the host's ethernet interface and
+   the VM is off or its network source is NAT(becuase the tap device will be connected even if there is no network connection) you will see all-zero MAC.
 
 --------------------------------------------------------------------------------------------- 
     
