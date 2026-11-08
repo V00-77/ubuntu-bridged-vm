@@ -51,6 +51,8 @@ but for our purpose is to make a separate route for the VM to connect to the net
 
 9. Finally, open your VM from the GUI app and check by running `ip addr`.![ip-vm](images/ip-addr-vm.png)
 
+And also you should have different IP on the host.![ip-host](images/ip-addr-host.png)
+
 And you can also run this in host `bridge link show`.![bridge-link-show](images/bridge-link-show.png)
 
 
